@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot rpa="false" generated="20191110 09:57:11.025" generator="Robot 3.1.2 (Python 2.7.17 on win32)">
+<suite source="C:\Projetos\Projeto_FakeRestAPI\tests\TestCaseAPIUsers.robot" id="s1" name="TestCaseAPIUsers">
+<kw type="setup" name="Connect to API" library="ResourceAPI">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>fakeAPIUsers</arg>
+<arg>${URL_API}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:11.194" level="INFO">Creating Session using : alias=fakeAPIUsers, url=https://fakerestapi.azurewebsites.net/api/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191110 09:57:11.195" starttime="20191110 09:57:11.193"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:11.195" starttime="20191110 09:57:11.192"></status>
+</kw>
+<test id="s1-t1" name="Scenario 01: GET Method - Return to the Users List">
+<kw name="Given I want to get the user listing" library="ResourceAPI">
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>fakeAPIUsers</arg>
+<arg>Users</arg>
+</arguments>
+<assign>
+<var>${RESPONSE}</var>
+</assign>
+<msg timestamp="20191110 09:57:11.196" level="INFO">GET Request using : uri=Users, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data=None 
+json=None</msg>
+<msg timestamp="20191110 09:57:12.505" level="INFO">c:\python27\lib\site-packages\urllib3\connectionpool.py:1004: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning,</msg>
+<msg timestamp="20191110 09:57:12.505" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:12.506" starttime="20191110 09:57:11.196"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${RESPONSE.text}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:12.506" level="INFO">[{"ID":1,"UserName":"User 1","Password":"Password1"},{"ID":2,"UserName":"User 2","Password":"Password2"},{"ID":3,"UserName":"User 3","Password":"Password3"},{"ID":4,"UserName":"User 4","Password":"Password4"},{"ID":5,"UserName":"User 5","Password":"Password5"},{"ID":6,"UserName":"User 6","Password":"Password6"},{"ID":7,"UserName":"User 7","Password":"Password7"},{"ID":8,"UserName":"User 8","Password":"Password8"},{"ID":9,"UserName":"User 9","Password":"Password9"},{"ID":10,"UserName":"User 10","Password":"Password10"}]</msg>
+<status status="PASS" endtime="20191110 09:57:12.506" starttime="20191110 09:57:12.506"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESPONSE}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:12.507" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:12.507" starttime="20191110 09:57:12.506"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:12.507" starttime="20191110 09:57:11.195"></status>
+</kw>
+<kw name="Then check Status Code" library="ResourceAPI">
+<arguments>
+<arg>200</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${RESPONSE.status_code}</arg>
+<arg>${STATUS_CODE_EXPECTED}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:12.508" level="INFO">Argument types are:
+&lt;type 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:12.508" starttime="20191110 09:57:12.508"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:12.508" starttime="20191110 09:57:12.507"></status>
+</kw>
+<kw name="And also valid the reason" library="ResourceAPI">
+<arguments>
+<arg>OK</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${RESPONSE.reason}</arg>
+<arg>${REASON_EXPECTED}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:12.509" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:12.510" starttime="20191110 09:57:12.509"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:12.510" starttime="20191110 09:57:12.509"></status>
+</kw>
+<kw name="Then I check if the total users is equal to &quot;10&quot;" library="ResourceAPI">
+<kw name="Length Should Be" library="BuiltIn">
+<doc>Verifies that the length of the given item is correct.</doc>
+<arguments>
+<arg>${RESPONSE.json()}</arg>
+<arg>${QTY_USERS}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:12.511" level="INFO">Length is 10</msg>
+<status status="PASS" endtime="20191110 09:57:12.512" starttime="20191110 09:57:12.511"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:12.512" starttime="20191110 09:57:12.510"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:12.512" critical="yes" starttime="20191110 09:57:11.195"></status>
+</test>
+<test id="s1-t2" name="Scenario 02: GET Method - Returning a Specific User">
+<kw name="Given I want to get the user &quot;10&quot;" library="ResourceAPI">
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>fakeAPIUsers</arg>
+<arg>Users/${ID_USER}</arg>
+</arguments>
+<assign>
+<var>${RESPONSE}</var>
+</assign>
+<msg timestamp="20191110 09:57:12.515" level="INFO">GET Request using : uri=Users/10, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data=None 
+json=None</msg>
+<msg timestamp="20191110 09:57:12.762" level="INFO">c:\python27\lib\site-packages\urllib3\connectionpool.py:1004: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning,</msg>
+<msg timestamp="20191110 09:57:12.763" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:12.763" starttime="20191110 09:57:12.515"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${RESPONSE.text}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:12.765" level="INFO">{"ID":10,"UserName":"User 10","Password":"Password10"}</msg>
+<status status="PASS" endtime="20191110 09:57:12.765" starttime="20191110 09:57:12.763"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESPONSE}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:12.765" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:12.765" starttime="20191110 09:57:12.765"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:12.765" starttime="20191110 09:57:12.514"></status>
+</kw>
+<kw name="Then check Status Code" library="ResourceAPI">
+<arguments>
+<arg>200</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${RESPONSE.status_code}</arg>
+<arg>${STATUS_CODE_EXPECTED}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:12.766" level="INFO">Argument types are:
+&lt;type 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:12.766" starttime="20191110 09:57:12.766"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:12.767" starttime="20191110 09:57:12.766"></status>
+</kw>
+<kw name="And also valid the reason" library="ResourceAPI">
+<arguments>
+<arg>OK</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${RESPONSE.reason}</arg>
+<arg>${REASON_EXPECTED}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:12.768" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:12.768" starttime="20191110 09:57:12.767"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:12.768" starttime="20191110 09:57:12.767"></status>
+</kw>
+<kw name="And check if the user data is correctly returning 10" library="ResourceAPI">
+<kw name="Dictionary Should Contain Item" library="Collections">
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<arguments>
+<arg>${RESPONSE.json()}</arg>
+<arg>ID</arg>
+<arg>${USER_10.ID}</arg>
+</arguments>
+<status status="PASS" endtime="20191110 09:57:12.769" starttime="20191110 09:57:12.769"></status>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<arguments>
+<arg>${RESPONSE.json()}</arg>
+<arg>UserName</arg>
+<arg>${USER_10.UserName}</arg>
+</arguments>
+<status status="PASS" endtime="20191110 09:57:12.770" starttime="20191110 09:57:12.769"></status>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<arguments>
+<arg>${RESPONSE.json()}</arg>
+<arg>Password</arg>
+<arg>${USER_10.Password}</arg>
+</arguments>
+<status status="PASS" endtime="20191110 09:57:12.770" starttime="20191110 09:57:12.770"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:12.770" starttime="20191110 09:57:12.768"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:12.771" critical="yes" starttime="20191110 09:57:12.513"></status>
+</test>
+<test id="s1-t3" name="Scenario 03: POST Method - Registering a New User">
+<kw name="Given I want to register a user" library="ResourceAPI">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>ID=12</arg>
+<arg>UserName=User Aline</arg>
+<arg>Password=ABC123</arg>
+</arguments>
+<assign>
+<var>&amp;{body}</var>
+</assign>
+<msg timestamp="20191110 09:57:12.773" level="INFO">&amp;{body} = { ID=12 | UserName=User Aline | Password=ABC123 }</msg>
+<status status="PASS" endtime="20191110 09:57:12.773" starttime="20191110 09:57:12.773"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>content-type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{header}</var>
+</assign>
+<msg timestamp="20191110 09:57:12.774" level="INFO">&amp;{header} = { content-type=application/json }</msg>
+<status status="PASS" endtime="20191110 09:57:12.774" starttime="20191110 09:57:12.773"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>fakeAPIUsers</arg>
+<arg>Users</arg>
+<arg>data=${body}</arg>
+<arg>headers=${header}</arg>
+</arguments>
+<assign>
+<var>${RESPONSE}</var>
+</assign>
+<msg timestamp="20191110 09:57:12.775" level="INFO">POST Request using : uri=Users, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'content-type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={"ID": "12", "UserName": "User Aline", "Password": "ABC123"} 
+json=None</msg>
+<msg timestamp="20191110 09:57:13.006" level="INFO">c:\python27\lib\site-packages\urllib3\connectionpool.py:1004: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning,</msg>
+<msg timestamp="20191110 09:57:13.006" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:13.006" starttime="20191110 09:57:12.774"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${RESPONSE.text}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.007" level="INFO">{"ID":12,"UserName":"User Aline","Password":"ABC123"}</msg>
+<status status="PASS" endtime="20191110 09:57:13.007" starttime="20191110 09:57:13.007"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${RESPONSE.status_code}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.008" level="INFO">200</msg>
+<status status="PASS" endtime="20191110 09:57:13.008" starttime="20191110 09:57:13.007"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.008" starttime="20191110 09:57:12.772"></status>
+</kw>
+<kw name="Then check Status Code" library="ResourceAPI">
+<arguments>
+<arg>200</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${RESPONSE.status_code}</arg>
+<arg>${STATUS_CODE_EXPECTED}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.009" level="INFO">Argument types are:
+&lt;type 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:13.009" starttime="20191110 09:57:13.009"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.009" starttime="20191110 09:57:13.008"></status>
+</kw>
+<kw name="And also valid the reason" library="ResourceAPI">
+<arguments>
+<arg>OK</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${RESPONSE.reason}</arg>
+<arg>${REASON_EXPECTED}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.010" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:13.010" starttime="20191110 09:57:13.010"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.011" starttime="20191110 09:57:13.010"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.011" critical="yes" starttime="20191110 09:57:12.771"></status>
+</test>
+<test id="s1-t4" name="Scenario 04: DELETE Method - Delete a User">
+<kw name="Given I want to delete user &quot;7&quot;" library="ResourceAPI">
+<kw name="Delete Request" library="RequestsLibrary">
+<doc>Send a DELETE request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>fakeAPIUsers</arg>
+<arg>Users/${ID_USER}</arg>
+</arguments>
+<assign>
+<var>${RESPONSE}</var>
+</assign>
+<msg timestamp="20191110 09:57:13.015" level="INFO">DELETE Request using : uri=Users/7, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data=None 
+json=None</msg>
+<msg timestamp="20191110 09:57:13.251" level="INFO">c:\python27\lib\site-packages\urllib3\connectionpool.py:1004: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning,</msg>
+<msg timestamp="20191110 09:57:13.251" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:13.252" starttime="20191110 09:57:13.014"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${RESPONSE.text}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.252" level="INFO"></msg>
+<status status="PASS" endtime="20191110 09:57:13.252" starttime="20191110 09:57:13.252"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.252" starttime="20191110 09:57:13.013"></status>
+</kw>
+<kw name="Then check Status Code" library="ResourceAPI">
+<arguments>
+<arg>200</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${RESPONSE.status_code}</arg>
+<arg>${STATUS_CODE_EXPECTED}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.254" level="INFO">Argument types are:
+&lt;type 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:13.254" starttime="20191110 09:57:13.253"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.254" starttime="20191110 09:57:13.253"></status>
+</kw>
+<kw name="And also valid the reason" library="ResourceAPI">
+<arguments>
+<arg>OK</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${RESPONSE.reason}</arg>
+<arg>${REASON_EXPECTED}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.255" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:13.255" starttime="20191110 09:57:13.254"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.255" starttime="20191110 09:57:13.254"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.255" critical="yes" starttime="20191110 09:57:13.012"></status>
+</test>
+<test id="s1-t5" name="Scenario 05: PUT Method - Updating a User">
+<kw name="Given I want to update user &quot;6&quot;" library="ResourceAPI">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>ID=${ID_USER}</arg>
+<arg>UserName=User Joane</arg>
+<arg>Password=DBC123</arg>
+</arguments>
+<assign>
+<var>&amp;{body}</var>
+</assign>
+<msg timestamp="20191110 09:57:13.258" level="INFO">&amp;{body} = { ID=6 | UserName=User Joane | Password=DBC123 }</msg>
+<status status="PASS" endtime="20191110 09:57:13.258" starttime="20191110 09:57:13.257"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>content-type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{header}</var>
+</assign>
+<msg timestamp="20191110 09:57:13.258" level="INFO">&amp;{header} = { content-type=application/json }</msg>
+<status status="PASS" endtime="20191110 09:57:13.259" starttime="20191110 09:57:13.258"></status>
+</kw>
+<kw name="Put Request" library="RequestsLibrary">
+<doc>Send a PUT request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>fakeAPIUsers</arg>
+<arg>Users/${ID_USER}</arg>
+<arg>data=${body}</arg>
+<arg>headers=${header}</arg>
+</arguments>
+<assign>
+<var>${RESPONSE}</var>
+</assign>
+<msg timestamp="20191110 09:57:13.259" level="INFO">PUT Request using : uri=Users/6, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'content-type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={"ID": "6", "UserName": "User Joane", "Password": "DBC123"} 
+json=None</msg>
+<msg timestamp="20191110 09:57:13.495" level="INFO">c:\python27\lib\site-packages\urllib3\connectionpool.py:1004: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning,</msg>
+<msg timestamp="20191110 09:57:13.496" level="INFO">${RESPONSE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:13.496" starttime="20191110 09:57:13.259"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${RESPONSE.text}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.496" level="INFO">{"ID":6,"UserName":"User Joane","Password":"DBC123"}</msg>
+<status status="PASS" endtime="20191110 09:57:13.497" starttime="20191110 09:57:13.496"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${RESPONSE.status_code}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.497" level="INFO">200</msg>
+<status status="PASS" endtime="20191110 09:57:13.497" starttime="20191110 09:57:13.497"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.497" starttime="20191110 09:57:13.257"></status>
+</kw>
+<kw name="Then check Status Code" library="ResourceAPI">
+<arguments>
+<arg>200</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${RESPONSE.status_code}</arg>
+<arg>${STATUS_CODE_EXPECTED}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.499" level="INFO">Argument types are:
+&lt;type 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:13.499" starttime="20191110 09:57:13.498"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.499" starttime="20191110 09:57:13.498"></status>
+</kw>
+<kw name="And also valid the reason" library="ResourceAPI">
+<arguments>
+<arg>OK</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${RESPONSE.reason}</arg>
+<arg>${REASON_EXPECTED}</arg>
+</arguments>
+<msg timestamp="20191110 09:57:13.500" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20191110 09:57:13.500" starttime="20191110 09:57:13.499"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.500" starttime="20191110 09:57:13.499"></status>
+</kw>
+<status status="PASS" endtime="20191110 09:57:13.500" critical="yes" starttime="20191110 09:57:13.256"></status>
+</test>
+<status status="PASS" endtime="20191110 09:57:13.502" starttime="20191110 09:57:11.028"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="5">Critical Tests</stat>
+<stat fail="0" pass="5">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="TestCaseAPIUsers" pass="5">TestCaseAPIUsers</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
